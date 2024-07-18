@@ -81,7 +81,7 @@ def split_from_git():
 
     filtered_data = list(filter(
         lambda it: it.metadata['file_path'].startswith("packages/modal") or it.metadata['file_path'].startswith(
-            "packages/dropdown"), data))
+            "packages/table"), data))
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000,
                                                    chunk_overlap=200, )

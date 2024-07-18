@@ -5,7 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from config import Config
 from embeddings import create_embeddings
-from loaders import split_markdown_documents
+from loaders import split_from_git
 
 
 def ask_question(question: str):
@@ -23,20 +23,22 @@ if __name__ == "__main__":
                    scope=Config.SCOPE,
                    verify_ssl_certs=False)
 
-    system_prompt = """Ты эксперт в области конфигурирования yaml файлов.
-    В ответе сначала укажи пример yaml файла с описанием параметров и пример запроса к сервису.
-    При построении yaml используй документацию. Провалидируй yaml согласно схеме . \n
+    system_prompt = """Ты ассистент с экспертизой в javascript, typescript и react. \n 
+    Используй компоненты и свойства только из @v-uik. В ответах опирайся на предоставленную документацию и примеры.  
+    Предоставляемый код должен корректно исполняться со всеми обязательными импортами и переменными. 
+    Структурируй свой ответ описанием решения кода. \n
+    Затем перечисли импорты и далее укажи работающий блок кода. \n
     {context}"""
 
-    question = "Опиши пример простого прокси сервиса на порту 8091, проксирующего на ya.ru."
+    question = "Напиши с использованием react пример страницы с модальным окном"
     # answer0 = llm([HumanMessage(content=question)]).content
     # print(answer0)
 
-    # documents = split_from_git()
+    documents = split_from_git()
 
     # documents = split_text_document()
 
-    documents = split_markdown_documents("content/developer-guide")
+    #documents = split_markdown_documents("content/user-guide/md")
 
     prompt = ChatPromptTemplate.from_messages(
         [
